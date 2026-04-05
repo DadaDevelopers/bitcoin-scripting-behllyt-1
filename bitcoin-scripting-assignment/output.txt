@@ -1,0 +1,40 @@
+==================================================
+HTLC SIMULATION
+==================================================
+Secret: b'alice_secret_preimage'
+Secret Hash: 89b164ac8ed7f7d0e1172426485cc550f5b2b3aec758a2cd2b7dd3746b615a1f
+
+--- HTLC Script ---
+HTLC Script:
+OP_IF
+    OP_SHA256 89b164ac8ed7f7d0e1172426485cc550f5b2b3aec758a2cd2b7dd3746b615a1f
+    OP_EQUALVERIFY
+    OP_DUP
+    OP_HASH160 090b732c6de9b47d7a6234807af8a6cddb22d461
+    OP_EQUALVERIFY
+    OP_CHECKSIG
+OP_ELSE
+    21 OP_CHECKLOCKTIMEVERIFY
+    OP_DROP
+    OP_DUP
+    OP_HASH160 0e6e3c904f491554db28779c3cfd8da7ddac4d29
+    OP_EQUALVERIFY
+    OP_CHECKSIG
+OP_ENDIF
+--- Scenario 1: Alice claims with correct secret ---
+=== Alice Claiming with Secret ===
+Secret: b'alice_secret_preimage'
+Secret Hash: 89b164ac8ed7f7d0e1172426485cc550f5b2b3aec758a2cd2b7dd3746b615a1f
+Hash verification: PASSED
+Alice claims the funds successfully!
+
+--- Scenario 2: Alice tries wrong secret ---
+=== Alice Claiming with Secret ===
+Hash verification: FAILED
+Alice cannot claim the funds!
+
+--- Scenario 3: Bob claims refund after timeout ---
+=== Bob Claiming Refund ===
+Timeout: 21 minutes have passed
+Timelock verification: PASSED
+Bob claims the refund successfully!
